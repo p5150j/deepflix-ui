@@ -166,7 +166,7 @@ const ThreeJSAnimation = () => {
       
       // Load the eye GLB model
       loader.load(
-        'https://arusimagesforsite.s3.us-west-2.amazonaws.com/eye.glb', // Update this to your actual path
+        'eye.glb', // Update this to your actual path
         (gltf) => {
           // Success callback
           const model = gltf.scene;
