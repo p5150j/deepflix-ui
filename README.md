@@ -1,70 +1,111 @@
-# Getting Started with Create React App
+# DeepFlix UI
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Overview
+DeepFlix is a React-based application that allows users to browse, create, and manage movies. It features a dynamic UI with animated backgrounds, real-time updates, and integration with Firebase for authentication and data storage.
 
-## Available Scripts
+## Features
+- **Home Page**: Displays featured content and trending movies.
+- **Movies Page**: Lists all available movies.
+- **Create Page**: Allows users to create new movies.
+- **My Movies Page**: Shows user-specific movies with real-time updates.
+- **Roadmap Page**: Displays a visual roadmap of the project's future plans.
+- **Navigation**: A fixed sidebar for easy access to different sections of the app.
 
-In the project directory, you can run:
+## Architecture
+The app is structured as follows:
 
-### `npm start`
+```
+src/
+├── components/       # Reusable UI components
+│   ├── Nav.js
+│   ├── RoadmapBackground.js
+│   └── TrendingRow.js
+├── pages/            # Full pages/routes
+│   ├── Home.js
+│   ├── Movies.js
+│   ├── Create.js
+│   ├── MyMovies.js
+│   └── Roadmap.js
+├── App.js            # Main application component
+├── firebase.js       # Firebase configuration
+└── AuthContext.js    # Authentication context
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## How It Works
+1. **User Authentication**: Users log in via Firebase Authentication.
+2. **Data Management**: Movie data is stored in Firebase Firestore.
+3. **Real-Time Updates**: Active jobs and movie statuses are updated in real-time using Firestore listeners.
+4. **UI Components**: The app uses styled-components for styling and Framer Motion for animations.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Diagrams
+### User Flow
+```mermaid
+graph LR
+    User --> Login
+    Login --> HomePage
+    HomePage --> BrowseMovies
+    BrowseMovies --> CreateManageMovies
+```
 
-### `npm test`
+### Data Flow
+```mermaid
+graph LR
+    UserInput --> FirebaseAuth
+    FirebaseAuth --> Firestore
+    Firestore --> RealTimeUpdates
+    RealTimeUpdates --> UI
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Queue Service Flow
+```mermaid
+graph LR
+    UserCreatesMovie --> AppSendsRequest
+    AppSendsRequest --> QueueService
+    QueueService --> AppUpdatesUI
+```
 
-### `npm run build`
+## Queue Service Integration
+DeepFlix communicates with a Queue Service to process movie creation requests. The Queue Service is responsible for handling asynchronous tasks such as video processing and data updates.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### How It Works
+- **API Endpoint**: The app sends requests to the Queue Service via the `REACT_APP_QUEUE_API_URL` environment variable.
+- **Asynchronous Processing**: When a user creates a movie, the request is sent to the Queue Service, which processes it in the background.
+- **Real-Time Updates**: The app listens for updates from the Queue Service to reflect the status of movie processing in real-time.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Example Flow
+```mermaid
+graph LR
+    UserCreatesMovie --> AppSendsRequest
+    AppSendsRequest --> QueueService
+    QueueService --> AppUpdatesUI
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Setup Instructions
+1. Clone the repository.
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Set up environment variables in a `.env` file:
+   ```
+   REACT_APP_FIREBASE_API_KEY=your_api_key
+   REACT_APP_FIREBASE_AUTH_DOMAIN=your_auth_domain
+   REACT_APP_FIREBASE_PROJECT_ID=your_project_id
+   REACT_APP_FIREBASE_STORAGE_BUCKET=your_storage_bucket
+   REACT_APP_FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id
+   REACT_APP_FIREBASE_APP_ID=your_app_id
+   REACT_APP_FIREBASE_MEASUREMENT_ID=your_measurement_id
+   REACT_APP_SAMPLE_VIDEO_URL=your_sample_video_url
+   
+   REACT_APP_QUEUE_API_URL=your_queue_api_url
+   ```
+4. Start the development server:
+   ```bash
+   npm start
+   ```
 
-### `npm run eject`
+## Contributing
+Contributions are welcome! Please open an issue or submit a pull request.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## License
+This project is licensed under the MIT License.
