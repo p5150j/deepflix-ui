@@ -3,7 +3,7 @@
 ## Overview
 DeepFlix is a React-based application that allows users to browse, create, and manage movies. It features a dynamic UI with animated backgrounds, real-time updates, and integration with Firebase for authentication and data storage.
 
-![Agent Collaboration System Architecture](Screenshot%202025-05-17%20at%205.44.29%E2%80%AFPM.png)
+![Agent Collaboration System Architecture](1.png)
 
 ## Features
 - **Home Page**: Displays featured content and trending movies.
